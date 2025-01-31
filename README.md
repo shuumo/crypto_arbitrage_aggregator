@@ -20,7 +20,7 @@ This program is a Crypto Market Data Aggregator, aiming to utilize efficient con
 - `main` file to launch the program
 - `exchangeSocket` implementations e.g. `binanceSocket.cpp` or `kucoinSocket.cpp`. These use websocket api from each exchange to get data and return in a normalized form
 - `taskRunner` director class of the program, this class is solely incharge of launching each thread. Maybe merge with main and make `taskRunner` the main?
-- `dataQueue` will be queue implementation (lock-free? for learning purposes). This queue will be initialized in taskRunner before launching the reader and writer threads, because the reader and writer will be reading and writing to this queue!
+- `dataQueue` will be queue implementation (lock-free? for learning purposes. ill start with mutexes and refactor to lockfree after i have an mvp as thats a project in itself I think). This queue will be initialized in taskRunner before launching the reader and writer threads, because the reader and writer will be reading and writing to this queue!
 - `outputManager` will be run on its own thread. it will be called to by the reader, so basically the reader will take data from the queue and pass it to the outputManager which will display data. Maybe this can be the reader rather than having a seperate reader as a buffer? Ill have to do some performance testing and drawing to determine.
 - `outputFront` implementations for the output manager, so it can just send the data to whatever fronts are enabled e.g. `guiFront`, `csvFront`, `cliFront`.
 - `threadPool` will be a thead pool implementation for the `exchangeSocket` writers.
